@@ -20,7 +20,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: blogging-platform/backend
-        run: dotnet restore
+        run: dotnet restore backend.csproj
 
       - name: Build with dotnet
         working-directory: blogging-platform/backend
@@ -43,14 +43,14 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write # This is required for requesting the JWT
+      id-token: write
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: .net-app
-
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -64,4 +64,4 @@ jobs:
         with:
           app-name: 'my-backend-app'
           slot-name: 'Production'
-          package: ${{env.DOTNET_ROOT}}/myapp
+          package: .
