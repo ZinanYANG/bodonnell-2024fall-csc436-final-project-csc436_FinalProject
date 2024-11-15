@@ -16,12 +16,13 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowReactApp",
         builder =>
         {
-            builder.WithOrigins("http://localhost:3000")
+            builder.WithOrigins("https://nice-moss-014326b10.5.azurestaticapps.net")
                    .AllowCredentials()
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         });
 });
+
 
 
 // Register MongoDbContext as a Singleton service
