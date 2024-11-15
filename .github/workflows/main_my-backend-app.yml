@@ -54,10 +54,12 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
-          client-secret: ${{ secrets.AZUREAPPSERVICE_SECRET }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}  # Replace this with your managed identity client ID
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}  # Replace this with your Azure tenant ID
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          enable-AzPSSession: false
+          environment: azurecloud
+
 
 
       - name: Deploy to Azure Web App
