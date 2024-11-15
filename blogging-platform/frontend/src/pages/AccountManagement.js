@@ -4,12 +4,14 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './AccountManagement.css'; // Import CSS file
 
+const API_BASE_URL = "https://my-backend-app-debne7hgd7gjgvd5.canadacentral-01.azurewebsites.net";
+
 function AccountManagement() {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://localhost:5042/profile', { withCredentials: true })
+        axios.get(`${API_BASE_URL}/profile`, { withCredentials: true })
             .then(response => {
                 const userData = response.data;
                 const nameMatch = userData.match(/Hello, (.+?)!/);
@@ -22,7 +24,7 @@ function AccountManagement() {
     }, []);
 
     const handleLogout = () => {
-        axios.get('http://localhost:5042/logout', { withCredentials: true })
+        axios.get(`${API_BASE_URL}/logout`, { withCredentials: true })
             .then(() => {
                 setUser(null);
                 navigate("/");
@@ -45,7 +47,7 @@ function AccountManagement() {
                 ) : (
                     <div className="signin-section">
                         <h2>Login to Blogging Platform</h2>
-                        <a href="http://localhost:5042/login" className="signin-button">Sign in with Google</a>
+                        <a href={`${API_BASE_URL}/login`} className="signin-button">Sign in with Google</a>
                     </div>
                 )}
             </div>

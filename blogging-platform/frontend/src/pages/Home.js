@@ -5,12 +5,14 @@ import BlogPosts from '../components/BlogPosts';
 import SubmitPost from '../components/SubmitPost';
 import './Home.css';
 
+const API_BASE_URL = "https://my-backend-app-debne7hgd7gjgvd5.canadacentral-01.azurewebsites.net";
+
 const Home = () => {
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [userName, setUserName] = useState('');
 
     useEffect(() => {
-        axios.get('http://localhost:5042/profile', { withCredentials: true })
+        axios.get(`${API_BASE_URL}/profile`, { withCredentials: true })
             .then(response => {
                 setIsSignedIn(true);
 

@@ -5,6 +5,8 @@ import axios from 'axios';
 import CommentForm from '../components/CommentForm';
 import './PostDetail.css';
 
+const API_BASE_URL = "https://my-backend-app-debne7hgd7gjgvd5.canadacentral-01.azurewebsites.net";
+
 function PostDetail() {
     const { id } = useParams();
     const [post, setPost] = useState(null);
@@ -13,7 +15,7 @@ function PostDetail() {
     const [editContent, setEditContent] = useState('');
 
     useEffect(() => {
-        axios.get(`http://localhost:5042/api/blogposts/${id}`)
+        axios.get(`${API_BASE_URL}/api/blogposts/${id}`)
             .then(response => {
                 setPost(response.data);
                 setEditTitle(response.data.title);
@@ -27,7 +29,7 @@ function PostDetail() {
     };
 
     const handleSaveClick = () => {
-        axios.put(`http://localhost:5042/api/blogposts/${id}`, {
+        axios.put(`${API_BASE_URL}/api/blogposts/${id}`, {
             ...post,
             title: editTitle,
             content: editContent
