@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+const API_BASE_URL = "https://my-backend-app-debne7hgd7gjgvd5.canadacentral-01.azurewebsites.net";
+
 function SubmitPost() {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:5042/api/user/blogposts', { title, content }, { withCredentials: true })
+        axios.post(`${API_BASE_URL}/api/user/blogposts`, { title, content }, { withCredentials: true })
             .then(() => {
                 setTitle('');
                 setContent('');

@@ -3,12 +3,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+const API_BASE_URL = "https://my-backend-app-debne7hgd7gjgvd5.canadacentral-01.azurewebsites.net";
+
 const BlogPosts = () => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
         // Use the endpoint to fetch posts for the logged-in user
-        axios.get('http://localhost:5042/api/user/blogposts', { withCredentials: true })
+        axios.get(`${API_BASE_URL}/api/user/blogposts`, { withCredentials: true })
             .then(response => setPosts(response.data))
             .catch(error => console.error("Error fetching posts:", error));
     }, []);
