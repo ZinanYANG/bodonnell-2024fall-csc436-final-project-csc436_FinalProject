@@ -21,8 +21,13 @@ jobs:
         with:
           dotnet-version: '8.x'
 
+
+      - name: Install dependencies
+        working-directory: blogging-platform/backend
+        run: dotnet restore
+
       - name: Build with dotnet
-        run: dotnet build ../blogging-platform/backend/backend.csproj --configuration Release
+        run: dotnet build backend.csproj --configuration Release
 
 
       - name: dotnet publish
