@@ -22,7 +22,8 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build ../blogging-platform/backend/backend.csproj --configuration Release
+
 
       - name: dotnet publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
