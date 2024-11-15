@@ -1,0 +1,13 @@
+# Node.js dependencies
+node_modules/
+
+# Build output
+bin/
+obj/
+
+# Logs
+*.log
+
+# Miscellaneous
+.DS_Store
+.env

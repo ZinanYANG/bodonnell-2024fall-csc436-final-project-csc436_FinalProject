@@ -1,0 +1,68 @@
+/* AccountManagement.css */
+
+.account-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    background-color: #f4f6f8;
+    /* Softer light gray background */
+}
+
+.account-card {
+    background-color: #ffffff;
+    padding: 25px;
+    width: 320px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    /* Softer shadow for a lifted effect */
+    text-align: center;
+}
+
+.profile-info {
+    margin: 20px 0;
+}
+
+.profile-info p {
+    font-size: 1.1rem;
+    color: #4a4a4a;
+    /* Darker gray for better readability */
+    margin: 8px 0;
+}
+
+.logout-button,
+.signin-button {
+    padding: 12px 18px;
+    font-size: 1rem;
+    color: white;
+    background-color: #3a7bd5;
+    /* More neutral blue for a professional look */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.logout-button:hover,
+.signin-button:hover {
+    background-color: #3368a8;
+    /* Slightly darker blue on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    /* Adding shadow on hover for button depth */
+}
+
+.signin-section h2 {
+    font-size: 1.3rem;
+    color: #2d3e50;
+    /* Dark blue-gray for headings */
+    margin-bottom: 20px;
+    font-weight: 600;
+    /* Slightly bolder for better readability */
+}
+
+.signin-button {
+    margin-top: 20px;
+    /* Added spacing for button placement */
+}
