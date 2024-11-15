@@ -54,13 +54,11 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}  # Replace this with your managed identity client ID
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}  # Replace this with your Azure tenant ID
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_FDD3A6D8DCD04A05A277C1423B2243B5 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_3AB904E3FF3542108E3C203D44B252D3 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_672072B99124491081A7D4057A1DEB1B }}
           enable-AzPSSession: false
           environment: azurecloud
-
-
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
