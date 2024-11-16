@@ -140,15 +140,25 @@ builder.Services.AddSwaggerGen();
 // Add services for Google Authentication
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultScheme = "Cookies";
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = "Google";
 })
-.AddCookie("Cookies") // Enables cookie-based session management
+.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+{
+    options.Cookie.HttpOnly = true; // Ensure the cookie is not accessible via client-side JavaScript
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Use secure cookies in production
+    options.Cookie.SameSite = SameSiteMode.None; // Allow cookies to work across different origins
+    options.Cookie.Name = "BloggingPlatformAuth"; // Optional: Custom name for the cookie
+    options.LoginPath = "/login"; // The endpoint for login
+    options.LogoutPath = "/logout"; // The endpoint for logout
+    options.AccessDeniedPath = "/access-denied"; // Optional: Path for unauthorized access
+    options.ExpireTimeSpan = TimeSpan.FromDays(7); // Optional: Set cookie expiration
+})
 .AddGoogle("Google", options =>
 {
     options.ClientId = Environment.GetEnvironmentVariable("GOOGLE_CLIENT_ID");
     options.ClientSecret = Environment.GetEnvironmentVariable("GOOGLE_CLIENT_SECRET");
-    options.CallbackPath = "/signin-google";  // This must match the URI set in Google Console
+    options.CallbackPath = "/signin-google"; // This must match the URI set in Google Console
 
     // Explicitly request email and profile scopes
     options.Scope.Add("email");
@@ -158,6 +168,7 @@ builder.Services.AddAuthentication(options =>
     options.ClaimActions.MapJsonKey("urn:google:email", "email");
     options.ClaimActions.MapJsonKey("urn:google:name", "name");
 });
+
 
 // Add authorization service
 builder.Services.AddAuthorization();
