@@ -67,3 +67,4 @@ jobs:
           app-name: 'my-backend-app'
           slot-name: 'Production'
           package: .
+
