@@ -11,60 +11,61 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      # Step 1: Checkout the repository
       - uses: actions/checkout@v4
 
+      # Step 2: Set up .NET Core
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
 
-      - name: Install dependencies
-        working-directory: blogging-platform/backend
-        run: dotnet restore backend.csproj
-
+      # Step 3: Build the application
       - name: Build with dotnet
         working-directory: blogging-platform/backend
-        run: dotnet build backend.csproj --configuration Release
+        run: dotnet build --configuration Release
 
-      - name: dotnet publish
+      # Step 4: Publish the application
+      - name: Publish with dotnet
         working-directory: blogging-platform/backend
-        run: dotnet publish backend.csproj -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+        run: dotnet publish -c Release -o ./publish
 
+      # Step 5: Upload the published application as an artifact
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          name: backend-app
+          path: blogging-platform/backend/publish
 
   deploy:
     runs-on: windows-latest
     needs: build
     environment:
-      name: 'Production'
+      name: 'production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write
 
     steps:
+      # Step 1: Download the artifact from the build job
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: .net-app
-      
+          name: backend-app
+
+      # Step 2: Log in to Azure
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_FDD3A6D8DCD04A05A277C1423B2243B5 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_3AB904E3FF3542108E3C203D44B252D3 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_672072B99124491081A7D4057A1DEB1B }}
-          enable-AzPSSession: false
-          environment: azurecloud
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
+      # Step 3: Deploy the application to Azure Web App
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'my-backend-app'
-          slot-name: 'Production'
-          package: .
-
+          app-name: 'my-backend-app'   # Replace with your Azure Web App name
+          slot-name: 'production'
+          package: blogging-platform/backend/publish
