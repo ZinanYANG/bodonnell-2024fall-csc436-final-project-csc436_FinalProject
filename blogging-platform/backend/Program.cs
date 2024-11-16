@@ -71,6 +71,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.MapGet("/", () => Results.Ok("Backend is running successfully!"));
+
+
+
 // Define login endpoint with the updated RedirectUri pointing to your deployed frontend
 app.MapGet("/login", async context =>
 {
