@@ -17,6 +17,74 @@ var googleClientId = Environment.GetEnvironmentVariable("GOOGLE_CLIENT_ID");
 var googleClientSecret = Environment.GetEnvironmentVariable("GOOGLE_CLIENT_SECRET");
 var redirectUri = Environment.GetEnvironmentVariable("FRONTEND_ACCOUNT_PAGE");
 
+
+// Debugging logs
+Console.WriteLine("Starting environment variable checks...");
+
+if (string.IsNullOrEmpty(connectionString))
+{
+    Console.WriteLine("Error: MONGO_CONNECTION_STRING is missing.");
+    Environment.Exit(1); // Exit the application
+}
+else
+{
+    Console.WriteLine($"MongoDB Connection String: {connectionString}");
+}
+
+if (string.IsNullOrEmpty(databaseName))
+{
+    Console.WriteLine("Error: MONGO_DATABASE_NAME is missing.");
+    Environment.Exit(1); // Exit the application
+}
+else
+{
+    Console.WriteLine($"MongoDB Database Name: {databaseName}");
+}
+
+if (string.IsNullOrEmpty(frontendBaseUrl))
+{
+    Console.WriteLine("Error: FRONTEND_BASE_URL is missing.");
+    Environment.Exit(1); // Exit the application
+}
+else
+{
+    Console.WriteLine($"Frontend Base URL: {frontendBaseUrl}");
+}
+
+if (string.IsNullOrEmpty(googleClientId))
+{
+    Console.WriteLine("Error: GOOGLE_CLIENT_ID is missing.");
+    Environment.Exit(1); // Exit the application
+}
+else
+{
+    Console.WriteLine($"Google Client ID: {googleClientId}");
+}
+
+if (string.IsNullOrEmpty(googleClientSecret))
+{
+    Console.WriteLine("Error: GOOGLE_CLIENT_SECRET is missing.");
+    Environment.Exit(1); // Exit the application
+}
+else
+{
+    Console.WriteLine($"Google Client Secret: (hidden for security)");
+}
+
+if (string.IsNullOrEmpty(redirectUri))
+{
+    Console.WriteLine("Error: FRONTEND_ACCOUNT_PAGE is missing.");
+    Environment.Exit(1); // Exit the application
+}
+else
+{
+    Console.WriteLine($"Frontend Account Page Redirect URI: {redirectUri}");
+}
+
+Console.WriteLine("All environment variables are set!");
+
+
+
 Console.WriteLine($"Connection String: {connectionString}");
 Console.WriteLine($"Database Name: {databaseName}");
 Console.WriteLine($"Frontend Base URL: {frontendBaseUrl}");
