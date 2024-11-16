@@ -76,13 +76,20 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+<<<<<<< HEAD
 // Weather forecast example endpoint
+=======
+// Example API endpoint
+>>>>>>> 24ccffa1c7a17d2fe3a0927d4c95ca985b9d1093
 var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 24ccffa1c7a17d2fe3a0927d4c95ca985b9d1093
 app.MapGet("/weatherforecast", () =>
 {
     var forecast = Enumerable.Range(1, 5).Select(index =>
@@ -98,12 +105,16 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast")
 .WithOpenApi();
 
+<<<<<<< HEAD
 
 /*
 Fetch an Individual Blog Post by ID
 http://localhost:5042/api/blogposts/{id}
 replace {id} with the actual blog ID
 */
+=======
+// Replace all localhost URLs with your actual deployed URLs
+>>>>>>> 24ccffa1c7a17d2fe3a0927d4c95ca985b9d1093
 app.MapGet("/api/blogposts/{id}", async (MongoDbContext dbContext, string id) =>
 {
     var blogPost = await dbContext.BlogPosts.Find(post => post.Id == id).FirstOrDefaultAsync();
@@ -113,6 +124,7 @@ app.MapGet("/api/blogposts/{id}", async (MongoDbContext dbContext, string id) =>
 
 app.MapGet("/api/user/blogposts", async (HttpContext context, MongoDbContext dbContext) =>
 {
+<<<<<<< HEAD
     // Get the current user's email from the authentication context
     var userEmail = context.User.FindFirst("urn:google:email")?.Value;
 
@@ -170,6 +182,31 @@ app.MapPost("/api/user/blogposts", async (HttpContext context, MongoDbContext db
 Fetch All Blog Posts 
 http://localhost:5042/api/blogposts
 */
+=======
+    var userEmail = context.User.FindFirst("urn:google:email")?.Value;
+    if (string.IsNullOrEmpty(userEmail)) return Results.Unauthorized();
+
+    var user = await dbContext.Users.Find(u => u.Email == userEmail).FirstOrDefaultAsync();
+    if (user == null) return Results.NotFound("User not found.");
+
+    var userPosts = await dbContext.BlogPosts.Find(post => post.AuthorId == user.Id).ToListAsync();
+    return Results.Ok(userPosts);
+});
+
+app.MapPost("/api/user/blogposts", async (HttpContext context, MongoDbContext dbContext, BlogPost newPost) =>
+{
+    var userEmail = context.User.FindFirst("urn:google:email")?.Value;
+    if (string.IsNullOrEmpty(userEmail)) return Results.Unauthorized();
+
+    var user = await dbContext.Users.Find(u => u.Email == userEmail).FirstOrDefaultAsync();
+    if (user == null) return Results.NotFound("User not found.");
+
+    newPost.AuthorId = user.Id;
+    await dbContext.BlogPosts.InsertOneAsync(newPost);
+    return Results.Created($"/api/user/blogposts/{newPost.Id}", newPost);
+});
+
+>>>>>>> 24ccffa1c7a17d2fe3a0927d4c95ca985b9d1093
 app.MapGet("/api/blogposts", async (MongoDbContext dbContext) =>
 {
     var blogPosts = await dbContext.BlogPosts.Find(_ => true).ToListAsync();
@@ -177,6 +214,7 @@ app.MapGet("/api/blogposts", async (MongoDbContext dbContext) =>
 })
 .WithName("GetAllBlogPosts");
 
+<<<<<<< HEAD
 app.MapGet("/api/user/posts", async (HttpContext context, MongoDbContext dbContext) =>
 {
     // Get the current user's email from the authentication context
@@ -202,15 +240,21 @@ app.MapGet("/api/user/posts", async (HttpContext context, MongoDbContext dbConte
 });
 
 // Define login endpoint
+=======
+>>>>>>> 24ccffa1c7a17d2fe3a0927d4c95ca985b9d1093
 app.MapGet("/login", async context =>
 {
     await context.ChallengeAsync("Google", new AuthenticationProperties
     {
+<<<<<<< HEAD
         // After successful login, Google will redirect to /profile
         // RedirectUri = "/profile"  
         RedirectUri = "http://localhost:3000/account"  // Redirect to frontend account page
 
 
+=======
+        RedirectUri = "https://nice-moss-014326b10.5.azurestaticapps.net/account"
+>>>>>>> 24ccffa1c7a17d2fe3a0927d4c95ca985b9d1093
     });
 });
 
@@ -415,12 +459,18 @@ app.MapPut("/api/users/{id}", async (MongoDbContext dbContext, string id, User u
 app.MapGet("/logout", async context =>
 {
     await context.SignOutAsync("Cookies");
+<<<<<<< HEAD
     context.Response.Redirect("http://localhost:3000"); // Redirect to the homepage or login page on the frontend
 }).WithName("Logout");
 
 
 
 
+=======
+    context.Response.Redirect("https://nice-moss-014326b10.5.azurestaticapps.net"); // Redirect to the homepage or login page on the frontend
+}).WithName("Logout");
+
+>>>>>>> 24ccffa1c7a17d2fe3a0927d4c95ca985b9d1093
 app.Run();
 
 // Record for WeatherForecast, used by the example weather endpoint
