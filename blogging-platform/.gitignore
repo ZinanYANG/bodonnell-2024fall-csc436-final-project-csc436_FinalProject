@@ -2,8 +2,8 @@
 node_modules/
 
 # Build output
-bin/
-obj/
+# bin/
+# obj/
 
 # Logs
 *.log
