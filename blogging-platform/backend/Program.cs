@@ -71,27 +71,80 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/", () => Results.Ok("Backend is running successfully!"));
+// Example API endpoint
+var summaries = new[]
+{
+    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+};
 
+app.MapGet("/weatherforecast", () =>
+{
+    var forecast = Enumerable.Range(1, 5).Select(index =>
+        new WeatherForecast
+        (
+            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+            Random.Shared.Next(-20, 55),
+            summaries[Random.Shared.Next(summaries.Length)]
+        ))
+        .ToArray();
+    return forecast;
+})
+.WithName("GetWeatherForecast")
+.WithOpenApi();
 
+// Replace all localhost URLs with your actual deployed URLs
+app.MapGet("/api/blogposts/{id}", async (MongoDbContext dbContext, string id) =>
+{
+    var blogPost = await dbContext.BlogPosts.Find(post => post.Id == id).FirstOrDefaultAsync();
+    return blogPost is not null ? Results.Ok(blogPost) : Results.NotFound();
+})
+.WithName("GetBlogPostById");
 
-// Define login endpoint with the updated RedirectUri pointing to your deployed frontend
+app.MapGet("/api/user/blogposts", async (HttpContext context, MongoDbContext dbContext) =>
+{
+    var userEmail = context.User.FindFirst("urn:google:email")?.Value;
+    if (string.IsNullOrEmpty(userEmail)) return Results.Unauthorized();
+
+    var user = await dbContext.Users.Find(u => u.Email == userEmail).FirstOrDefaultAsync();
+    if (user == null) return Results.NotFound("User not found.");
+
+    var userPosts = await dbContext.BlogPosts.Find(post => post.AuthorId == user.Id).ToListAsync();
+    return Results.Ok(userPosts);
+});
+
+app.MapPost("/api/user/blogposts", async (HttpContext context, MongoDbContext dbContext, BlogPost newPost) =>
+{
+    var userEmail = context.User.FindFirst("urn:google:email")?.Value;
+    if (string.IsNullOrEmpty(userEmail)) return Results.Unauthorized();
+
+    var user = await dbContext.Users.Find(u => u.Email == userEmail).FirstOrDefaultAsync();
+    if (user == null) return Results.NotFound("User not found.");
+
+    newPost.AuthorId = user.Id;
+    await dbContext.BlogPosts.InsertOneAsync(newPost);
+    return Results.Created($"/api/user/blogposts/{newPost.Id}", newPost);
+});
+
+app.MapGet("/api/blogposts", async (MongoDbContext dbContext) =>
+{
+    var blogPosts = await dbContext.BlogPosts.Find(_ => true).ToListAsync();
+    return Results.Ok(blogPosts);
+})
+.WithName("GetAllBlogPosts");
+
 app.MapGet("/login", async context =>
 {
     await context.ChallengeAsync("Google", new AuthenticationProperties
     {
-        RedirectUri = "https://nice-moss-014326b10.5.azurestaticapps.net/account"  // Update this URL to match your deployed frontend's account page
+        RedirectUri = "https://nice-moss-014326b10.5.azurestaticapps.net/account"
     });
 });
 
 app.MapGet("/logout", async context =>
 {
     await context.SignOutAsync("Cookies");
-    context.Response.Redirect("https://nice-moss-014326b10.5.azurestaticapps.net"); // Redirect to the homepage or login page on the deployed frontend
+    context.Response.Redirect("https://nice-moss-014326b10.5.azurestaticapps.net"); // Redirect to the homepage or login page on the frontend
 }).WithName("Logout");
-
-// Other endpoints remain the same
-// ... (rest of your endpoints)
 
 app.Run();
 
