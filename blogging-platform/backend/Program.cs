@@ -189,6 +189,8 @@ var summaries = new[]
 
 // Define all API routes
 
+app.MapGet("/", () => "Welcome to the backend of Blogging Platform!");
+
 app.MapGet("/weatherforecast", () =>
 {
     var forecast = Enumerable.Range(1, 5).Select(index =>
