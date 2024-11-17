@@ -5,8 +5,7 @@ using MongoDB.Driver;
 using MongoDB.Bson;
 using DotNetEnv;
 
-// Load the environment variables from the .env file
-DotNetEnv.Env.Load();
+
 
 // Use environment variables for sensitive information and configurable settings
 var connectionString = Environment.GetEnvironmentVariable("MONGO_CONNECTION_STRING") ??
