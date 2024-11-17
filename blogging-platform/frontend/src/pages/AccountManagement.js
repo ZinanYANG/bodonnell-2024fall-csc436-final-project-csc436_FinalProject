@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './AccountManagement.css'; // Import CSS file
 
-const API_BASE_URL = const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "https://my-backend-app-debne7hgd7gjgvd5.canadacentral-01.azurewebsites.net";
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "https://my-backend-app-debne7hgd7gjgvd5.canadacentral-01.azurewebsites.net";
 console.log("API_BASE_URL:", API_BASE_URL);
 
 
