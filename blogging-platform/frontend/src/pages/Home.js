@@ -5,7 +5,11 @@ import BlogPosts from '../components/BlogPosts';
 import SubmitPost from '../components/SubmitPost';
 import './Home.css';
 
-const API_BASE_URL = "https://my-backend-app-debne7hgd7gjgvd5.canadacentral-01.azurewebsites.net";
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+// const API_BASE_URL = "https://my-backend-app-debne7hgd7gjgvd5.canadacentral-01.azurewebsites.net";
+// const API_BASE_URL = "http://localhost:5042";
 
 const Home = () => {
     const [isSignedIn, setIsSignedIn] = useState(false);
