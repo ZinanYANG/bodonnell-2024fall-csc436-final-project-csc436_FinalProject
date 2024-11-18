@@ -1,0 +1,24 @@
+{
+  "routes": [
+    {
+      "route": "/account",
+      "serve": "/index.html",
+      "statusCode": 200
+    },
+    {
+      "route": "/post/*",
+      "serve": "/index.html",
+      "statusCode": 200
+    },
+    {
+      "route": "/signin-google",
+      "serve": "/index.html",
+      "statusCode": 200
+    },
+    {
+      "route": "/*",
+      "serve": "/index.html",
+      "statusCode": 200
+    }
+  ]
+}
