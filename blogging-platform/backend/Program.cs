@@ -191,7 +191,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-redirectUri = Environment.GetEnvironmentVariable("FRONTEND_ACCOUNT_PAGE") ?? $"{frontendBaseUrl}/account";
+// redirectUri = Environment.GetEnvironmentVariable("FRONTEND_ACCOUNT_PAGE") ?? $"{frontendBaseUrl}/account";
 
 // Weather forecast example endpoint
 var summaries = new[]
