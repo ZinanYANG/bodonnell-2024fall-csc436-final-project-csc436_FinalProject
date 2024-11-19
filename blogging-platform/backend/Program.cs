@@ -14,8 +14,8 @@ var databaseName = Environment.GetEnvironmentVariable("MONGO_DATABASE_NAME") ?? 
 var frontendBaseUrl = Environment.GetEnvironmentVariable("FRONTEND_BASE_URL") ?? "http://localhost:3000";
 var googleClientId = Environment.GetEnvironmentVariable("GOOGLE_CLIENT_ID");
 var googleClientSecret = Environment.GetEnvironmentVariable("GOOGLE_CLIENT_SECRET");
-// var redirectUri = Environment.GetEnvironmentVariable("FRONTEND_ACCOUNT_PAGE") ?? $"{frontendBaseUrl}/account";
-var redirectUri = "http://localhost:3000/account";
+var redirectUri = Environment.GetEnvironmentVariable("FRONTEND_ACCOUNT_PAGE") ?? $"{frontendBaseUrl}/account";
+// var redirectUri = "http://localhost:3000/account";
 
 
 
@@ -367,9 +367,10 @@ app.MapGet("/login", async context =>
 {
     await context.ChallengeAsync("Google", new AuthenticationProperties
     {
-        RedirectUri = redirectUri
+        RedirectUri = $"{frontendBaseUrl}/account"
     });
 });
+
 
 app.MapGet("/logout", async context =>
 {
