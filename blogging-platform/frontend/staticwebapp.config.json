@@ -1,0 +1,21 @@
+{
+    "routes": [
+        {
+            "route": "/account",
+            "rewrite": "/index.html"
+        },
+        {
+            "route": "/post/:id",
+            "rewrite": "/index.html"
+        },
+        {
+            "route": "/*",
+            "rewrite": "/index.html"
+        }
+    ],
+    "mimeTypes": {
+        ".css": "text/css",
+        ".js": "application/javascript",
+        ".json": "application/json"
+    }
+}
