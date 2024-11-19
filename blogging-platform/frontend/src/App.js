@@ -13,8 +13,9 @@ function App() {
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/post/:id" element={<PostDetail />} />
         <Route path="/account" element={<AccountManagement />} />
+        <Route path="/blogposts" element={<BlogPosts />} />
+        <Route path="/post/:id" element={<PostDetail />} />
       </Routes>
     </Router>
   );
