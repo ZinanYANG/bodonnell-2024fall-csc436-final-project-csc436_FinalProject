@@ -1,21 +1,24 @@
 {
-    "routes": [
-        {
-            "route": "/account",
-            "rewrite": "/index.html"
-        },
-        {
-            "route": "/post/:id",
-            "rewrite": "/index.html"
-        },
-        {
-            "route": "/*",
-            "rewrite": "/index.html"
-        }
-    ],
-    "mimeTypes": {
-        ".css": "text/css",
-        ".js": "application/javascript",
-        ".json": "application/json"
+  "routes": [
+    {
+      "route": "/account",
+      "rewrite": "/index.html"
+    },
+    {
+      "route": "/post/:id",
+      "rewrite": "/index.html"
+    },
+    {
+      "route": "/*",
+      "rewrite": "/index.html"
     }
+  ],
+  "mimeTypes": {
+    ".css": "text/css",
+    ".js": "application/javascript",
+    ".json": "application/json",
+    ".svg": "image/svg+xml",
+    ".woff": "font/woff",
+    ".woff2": "font/woff2"
+  }
 }
