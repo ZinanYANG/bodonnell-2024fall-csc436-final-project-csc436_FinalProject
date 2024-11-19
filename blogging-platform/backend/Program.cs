@@ -118,17 +118,19 @@ catch (Exception ex)
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure CORS policy to allow requests from the frontend
+// Configure CORS policy to allow requests from specific frontend URLs
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReactApp",
-        builder =>
-        {
-            builder.WithOrigins(frontendBaseUrl)
-                   .AllowCredentials()
-                   .AllowAnyHeader()
-                   .AllowAnyMethod();
-        });
+    options.AddPolicy("AllowReactApp", corsBuilder =>
+    {
+        corsBuilder.WithOrigins(
+            "http://localhost:3000", // Local development
+            "https://kind-water-06975370f.5.azurestaticapps.net" // Deployed frontend
+        )
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials(); // Allow cookies and credentials
+    });
 });
 
 // Register MongoDbContext as a Singleton service
@@ -169,6 +171,7 @@ builder.Services.AddAuthentication(options =>
     options.ClaimActions.MapJsonKey("urn:google:email", "email");
     options.ClaimActions.MapJsonKey("urn:google:name", "name");
 });
+
 
 
 // Add authorization service
